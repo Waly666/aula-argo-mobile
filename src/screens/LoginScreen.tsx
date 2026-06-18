@@ -11,7 +11,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { IconInput } from '../components/IconInput';
@@ -110,23 +109,18 @@ export default function LoginScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <LinearGradient
-          colors={c.gradientHero}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={[styles.hero, { paddingTop: insets.top + space.md }]}
-        >
+        <View style={[styles.hero, { paddingTop: insets.top + space.md, backgroundColor: c.accentSoft }]}>
           <Pressable onPress={() => nav.goBack()} style={styles.back} hitSlop={12}>
-            <Ionicons name="arrow-back" size={22} color="#fff" />
+            <Ionicons name="arrow-back" size={22} color={c.primary} />
           </Pressable>
           <PortalLogo width={120} height={56} hideLetterFallback />
-          <ScaledText baseSize={15} style={styles.brandAula}>
+          <ScaledText baseSize={15} style={[styles.brandAula, { color: c.primary }]}>
             {APP_BRANDING.tituloApp}
           </ScaledText>
-          <ScaledText baseSize={16} style={styles.brandEmpresa}>
+          <ScaledText baseSize={16} style={[styles.brandEmpresa, { color: c.text }]}>
             {APP_BRANDING.nombreEmpresa}
           </ScaledText>
-        </LinearGradient>
+        </View>
 
         <SurfaceCard style={{ marginHorizontal: space.lg, marginTop: -28, borderRadius: radius.xl, ...shadow.lg }}>
           <ScaledText baseSize={22} style={{ color: c.text, fontWeight: '800', marginBottom: 4 }}>
@@ -253,12 +247,13 @@ const styles = StyleSheet.create({
     paddingBottom: space.xxl,
     borderBottomLeftRadius: radius.xl,
     borderBottomRightRadius: radius.xl,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
     alignItems: 'center',
   },
   back: { alignSelf: 'flex-start', marginBottom: space.sm },
-  brandEmpresa: { color: 'rgba(255,255,255,0.95)', fontWeight: '700', textAlign: 'center', marginTop: 4 },
+  brandEmpresa: { fontWeight: '700', textAlign: 'center', marginTop: 4 },
   brandAula: {
-    color: '#fff',
     fontWeight: '800',
     textAlign: 'center',
     marginTop: space.sm,

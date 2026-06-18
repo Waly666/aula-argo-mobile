@@ -43,12 +43,18 @@ function ThemedNavigator() {
 
   const headerOptions = useMemo(
     () => ({
-      headerTintColor: '#fff' as const,
-      headerStyle: { backgroundColor: c.primaryDark, elevation: 0, shadowOpacity: 0 },
-      headerTitleStyle: { fontWeight: '700' as const },
+      headerTintColor: c.primary,
+      headerStyle: {
+        backgroundColor: c.headerBg,
+        elevation: 0,
+        shadowOpacity: 0,
+        borderBottomWidth: 1,
+        borderBottomColor: c.headerBorder,
+      },
+      headerTitleStyle: { fontWeight: '700' as const, color: c.text },
       cardStyle: { backgroundColor: c.bg },
     }),
-    [c.primaryDark, c.bg],
+    [c.primary, c.headerBg, c.headerBorder, c.text, c.bg],
   );
 
   if (state.status === 'loading') {
@@ -127,7 +133,7 @@ export default function App() {
               <SplashGate>
                 <ThemedNavigator />
               </SplashGate>
-              <StatusBar style="light" />
+              <StatusBar style="dark" />
             </ThemeProvider>
           </PortalConfigProvider>
         </AuthProvider>
