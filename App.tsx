@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -26,24 +26,30 @@ const Stack = createStackNavigator<RootStackParamList>();
 function ThemedNavigator() {
   const { state } = useAuth();
   const c = useTheme();
-  const navTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: c.primary,
-      background: c.bg,
-      card: c.card,
-      text: c.text,
-      border: c.border,
-    },
-  };
+  const navTheme = useMemo(
+    () => ({
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        primary: c.primary,
+        background: c.bg,
+        card: c.card,
+        text: c.text,
+        border: c.border,
+      },
+    }),
+    [c.primary, c.bg, c.card, c.text, c.border],
+  );
 
-  const headerOptions = {
-    headerTintColor: '#fff',
-    headerStyle: { backgroundColor: c.primaryDark, elevation: 0, shadowOpacity: 0 },
-    headerTitleStyle: { fontWeight: '700' as const },
-    cardStyle: { backgroundColor: c.bg },
-  };
+  const headerOptions = useMemo(
+    () => ({
+      headerTintColor: '#fff' as const,
+      headerStyle: { backgroundColor: c.primaryDark, elevation: 0, shadowOpacity: 0 },
+      headerTitleStyle: { fontWeight: '700' as const },
+      cardStyle: { backgroundColor: c.bg },
+    }),
+    [c.primaryDark, c.bg],
+  );
 
   if (state.status === 'loading') {
     return (

@@ -20,6 +20,7 @@ const config: ExpoConfig = {
       backgroundColor: '#0d47a1',
     },
     package: 'co.finstruvial.aula',
+    softwareKeyboardLayoutMode: 'resize',
   },
   plugins: [
     'expo-font',

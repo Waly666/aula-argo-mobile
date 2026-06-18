@@ -1,9 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React, { useMemo } from 'react';
 
 import { usePortalConfig } from './PortalConfigContext';
 import { themeFromPortal } from '../theme/colors';
 
-const ThemeContext = createContext(themeFromPortal({
+const ThemeContext = React.createContext(themeFromPortal({
   colorPrimario: '#1565c0',
   colorPrimarioOscuro: '#0d47a1',
   colorAcento: '#00acc1',
@@ -15,10 +15,22 @@ const ThemeContext = createContext(themeFromPortal({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { tema } = usePortalConfig();
-  const colors = themeFromPortal(tema);
+  const colors = useMemo(
+    () => themeFromPortal(tema),
+    [
+      tema.colorPrimario,
+      tema.colorPrimarioOscuro,
+      tema.colorAcento,
+      tema.colorFondo,
+      tema.colorSuperficie,
+      tema.colorTexto,
+      tema.colorTextoSecundario,
+    ],
+  );
+
   return <ThemeContext.Provider value={colors}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {
-  return useContext(ThemeContext);
+  return React.useContext(ThemeContext);
 }
